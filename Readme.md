@@ -1,7 +1,8 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Karina Kaptola](https://up.htmlacademy.ru/javascript/24/user/1868599).
-* Наставник: `Неизвестно`.
+- Студент: [Karina Kaptola](https://up.htmlacademy.ru/javascript/24/user/1868599).
+
+* Наставник: `Александр Мастеров`.
 
 ---
 
