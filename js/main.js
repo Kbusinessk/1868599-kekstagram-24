@@ -3,21 +3,18 @@
 // Option number 1
 
 const getRandomNumber = (min, max) => {
-  if (min < 0) {
-    throw new Error('Неверно указано начало диапазона ')
+  if (min < 0 || min >= max) {
+    throw new Error('Неверно указано начало диапазона');
   }
-  return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min))
-}
 
-const randomNumber = getRandomNumber(0, 140)
-console.log(randomNumber)
+  return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1) + Math.ceil(min));
+};
 
-const checkCommentLength = (comment, maxLength) => {
-  return comment.length <= maxLength
-}
+getRandomNumber(0, 140);
 
-const isLengthLessThanMax = checkCommentLength('Проверка длины введённого комментария', 140)
-console.log(isLengthLessThanMax)
+const checkCommentLength = (comment, maxLength) => comment.length <= maxLength;
+
+checkCommentLength('Проверка длины введённого комментария', 140);
 
 //Option number 2
 
