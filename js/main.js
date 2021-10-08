@@ -1,6 +1,4 @@
-// https://devdocs.io/javascript/global_objects/math/random
-
-const PHOTOS_OBJECTS = 25;
+const PHOTO_COUNT = 25;
 
 const PHOTOS_DESCRIPTIONS = [
   'Ваши первые 10 000 фотографий – Ваши худшие',
@@ -11,7 +9,7 @@ const PHOTOS_DESCRIPTIONS = [
   'Хороший снимок останавливает ускользающее мгновение',
 ];
 
-const COMMENTS_TEXT = [
+const COMMENTS_MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -20,7 +18,7 @@ const COMMENTS_TEXT = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const AUTHOR_NAMES = [
+const AUTHORS_NAMES = [
   'Анри Картье-Брессон',
   'Юджин Смит',
   'Хельмут Ньютон',
@@ -43,46 +41,50 @@ const getRandomInteger = (min, max) => {
 const checkTextLength = (text, maxLength) => text.length <= maxLength;
 checkTextLength('Проверка длины введённого комментария', 140);
 
-// Получение случайного элемента из массива  (элеменеты не повторяются)
-const getRandomArrayElement = elements => {
-  return elements[getRandomInteger(0, elements.length - 1)];
-};
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-function getArreyUniqueRandomInteger(max) {
-  let usedNumbers = [max--];
-  !(function f() {
-    let i = Math.round(Math.random() * usedNumbers.length);
-    usedNumbers.splice(i, 0, max--);
-    max && f();
-  })();
+const getArrayUniqueRandomInteger = (max) => {
+  const usedNumbers = [max];
+  let randomNumber;
+  for (randomNumber = 0; randomNumber < max; randomNumber++) {
+    randomNumber = Math.round(Math.random() * max);
+  }
+
+  const uniqueNumber = () => {
+    randomNumber = Math.round(Math.random() * max);
+    usedNumbers.splice(randomNumber, 0, max--);
+    max && uniqueNumber();
+  };
+
+  uniqueNumber();
 
   return usedNumbers;
-}
+};
 
-const RANDOM_ID = getArreyUniqueRandomInteger(PHOTOS_OBJECTS);
+const randomIds = getArrayUniqueRandomInteger(PHOTO_COUNT);
 
-const getRandomId = () => parseInt(Date.now() * Math.random());
-const createComments = () => {
-  const randomAuthorsNamesIndex = getRandomInteger(0, AUTHOR_NAMES.length - 1);
+const getRandomId = () => parseInt(Date.now() * Math.random(), 10);
+
+const createComment = () => {
+  const randomAuthorsNamesIndex = getRandomInteger(0, AUTHORS_NAMES.length - 1);
 
   return {
     id: getRandomId(),
-    avatar: 'img/avatar-' + getRandomInteger(1, 6) + '.svg',
-    message: getRandomArrayElement(COMMENTS_TEXT),
-    name: AUTHOR_NAMES[randomAuthorsNamesIndex],
+    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+    message: getRandomArrayElement(COMMENTS_MESSAGES),
+    name: AUTHORS_NAMES[randomAuthorsNamesIndex],
   };
 };
 
-let cn = 0;
+let count = 0;
 const createUsersPhoto = () => {
-  cn++;
+  count++;
   return {
-    id: RANDOM_ID[cn],
-    url: 'photos/' + getRandomInteger(1, PHOTOS_OBJECTS) + '.jpg',
+    id: randomIds[count],
+    url: `photos/${getRandomInteger(1, PHOTO_COUNT)}.jpg`,
     discription: getRandomArrayElement(PHOTOS_DESCRIPTIONS),
     likes: getRandomInteger(15, 200),
-    comments: Array.from({ length: getRandomInteger(0, 10) }, createComments),
+    comments: Array.from({ length: getRandomInteger(0, 10) }, createComment),
   };
 };
-const similarUsersPhotos = Array.from({ length: PHOTOS_OBJECTS }, createUsersPhoto);
-console.log(similarUsersPhotos);
+Array.from({ length: PHOTO_COUNT }, createUsersPhoto);
