@@ -1,2 +1,3 @@
-import './data.js';
-import './util.js';
+import { generateUserPhotos } from './util.js';
+
+generateUserPhotos();

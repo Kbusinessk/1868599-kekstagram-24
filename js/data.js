@@ -1,6 +1,14 @@
+import {
+  getRandomInteger,
+  getRandomArrayElement,
+  getArrayUniqueRandomInteger,
+  // eslint-disable-next-line comma-dangle
+  getRandomId,
+} from './random.js';
+
 const PHOTO_COUNT = 25;
 
-const PHOTOS_DESCRIPTIONS = [
+const PHOTO_DESCRIPTIONS = [
   'Ваши первые 10 000 фотографий – Ваши худшие',
   'Мир просто не укладывается в формат 35-мм камеры',
   'Послушайте, я не интеллигент - я просто фотографирую',
@@ -26,4 +34,31 @@ const AUTHORS_NAMES = [
   'Питер Адамс',
   'Юдоре Уэлти',
 ];
-export { PHOTO_COUNT, PHOTOS_DESCRIPTIONS, COMMENTS_MESSAGES, AUTHORS_NAMES };
+
+const randomIds = getArrayUniqueRandomInteger(PHOTO_COUNT);
+
+const createComment = () => {
+  const randomAuthorsNamesIndex = getRandomInteger(0, AUTHORS_NAMES.length - 1);
+
+  return {
+    id: getRandomId(),
+    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+    message: getRandomArrayElement(COMMENTS_MESSAGES),
+    name: AUTHORS_NAMES[randomAuthorsNamesIndex],
+  };
+};
+
+let count = 0;
+
+const createUsersPhoto = () => {
+  count++;
+  return {
+    id: randomIds[count],
+    url: `photos/${getRandomInteger(1, PHOTO_COUNT)}.jpg`,
+    discription: getRandomArrayElement(PHOTO_DESCRIPTIONS),
+    likes: getRandomInteger(15, 200),
+    comments: Array.from({ length: getRandomInteger(0, 10) }, createComment),
+  };
+};
+
+export { PHOTO_COUNT, createUsersPhoto };
