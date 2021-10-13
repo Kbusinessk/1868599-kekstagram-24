@@ -1,3 +1,5 @@
-import { generateUserPhotos } from './util.js';
+// import { generateUserPhotos } from './util.js';
 
-generateUserPhotos();
+// generateUserPhotos();
+
+import './pictures.js';

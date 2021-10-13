@@ -62,3 +62,5 @@ const createUsersPhoto = () => {
 };
 
 export { PHOTO_COUNT, createUsersPhoto };
+
+// author: img/avatars/user${[index].toString(index).padStart(2, '0')}.png
