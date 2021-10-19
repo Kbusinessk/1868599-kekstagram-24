@@ -1,3 +1,5 @@
+import { isEscapeKey } from '../util.js';
+
 const body = document.querySelector('body');
 const bigPicture = body.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
@@ -22,23 +24,22 @@ const createComment = ({ avatar, message, name }) => {
   return commentOne;
 };
 
-const openBigPicture = () => {
+const showBigPicture = () => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
 };
 
-const closeBigPicture = () => {
+const hideBigPicture = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
 };
 
 const popupBigPicture = ({ url, description, likes, comments }) => {
-  openBigPicture();
-
-  closeButton.addEventListener('keydown', (evt) => {
-    if (evt.key === ('Escape' || 'Esc')) {
+  closeButton.addEventListener('click', hideBigPicture);
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
-      closeBigPicture();
+      hideBigPicture();
     }
   });
 
@@ -47,14 +48,16 @@ const popupBigPicture = ({ url, description, likes, comments }) => {
   bigPicture.querySelector('.social__caption').textContent = description;
 
   const commentsList = bigPicture.querySelector('.social__comments');
-  commentsList.innerHTML = '';
-  const commentsElement = commentsList.querySelectorAll('li');
 
-  commentsElement.forEach((el) => commentsList.removeChild(el));
+  const commentsRow = commentsList.querySelectorAll('li');
+
+  commentsRow.forEach((el) => commentsList.removeChild(el));
   const commentsCount = bigPicture.querySelector('.social__comment-count');
   commentsCount.classList.add('hidden');
 
   comments.forEach((comment) => commentsList.appendChild(createComment(comment)));
+
+  showBigPicture();
 };
 
 export { popupBigPicture };
