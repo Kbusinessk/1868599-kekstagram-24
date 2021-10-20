@@ -7,11 +7,8 @@ import { popupBigPicture } from './render_pictures/big-pictures.js';
 
 const pictureContainer = document.querySelector('.pictures');
 
-const fragment = document.createDocumentFragment();
-
 const onPictureClick = (photo) => {
   popupBigPicture(photo);
 };
 
-userPhotos.map((photo) => fragment.appendChild(getNewPicture(photo, onPictureClick)));
-pictureContainer.append(fragment);
+userPhotos.map((photo) => pictureContainer.appendChild(getNewPicture(photo, onPictureClick)));
