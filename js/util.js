@@ -6,4 +6,14 @@ checkTextLength('Проверка длины введённого коммент
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export { isEscapeKey };
+const openModal = (element) => {
+  document.body.classList.add('modal-open');
+  element.classList.remove('hidden');
+};
+
+const closeModal = (element) => {
+  document.body.classList.remove('modal-open');
+  element.classList.add('hidden');
+};
+
+export { isEscapeKey, openModal, closeModal };

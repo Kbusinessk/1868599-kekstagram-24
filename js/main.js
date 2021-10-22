@@ -1,5 +1,7 @@
 import { PHOTO_COUNT, createUsersPhoto } from './data.js';
 
+const fragment = document.createDocumentFragment();
+
 const userPhotos = Array.from({ length: PHOTO_COUNT }, createUsersPhoto);
 import { getNewPicture } from './render_pictures/pictures.js';
 
@@ -11,4 +13,5 @@ const onPictureClick = (photo) => {
   popupBigPicture(photo);
 };
 
-userPhotos.map((photo) => pictureContainer.appendChild(getNewPicture(photo, onPictureClick)));
+userPhotos.forEach((photo) => fragment.appendChild(getNewPicture(photo, onPictureClick)));
+pictureContainer.append(fragment);
