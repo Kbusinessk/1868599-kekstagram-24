@@ -1,7 +1,6 @@
 import {
   getRandomInteger,
   getRandomArrayElement,
-  getArrayUniqueRandomInteger,
   // eslint-disable-next-line comma-dangle
   getRandomId,
 } from './random.js';
@@ -35,8 +34,6 @@ const AUTHORS_NAMES = [
   'Юдоре Уэлти',
 ];
 
-const randomIds = getArrayUniqueRandomInteger(PHOTO_COUNT);
-
 const createComment = () => {
   const randomAuthorsNamesIndex = getRandomInteger(0, AUTHORS_NAMES.length - 1);
 
@@ -53,14 +50,12 @@ let count = 0;
 const createUsersPhoto = () => {
   count++;
   return {
-    id: randomIds[count],
+    id: count,
     url: `photos/${getRandomInteger(1, PHOTO_COUNT)}.jpg`,
-    discription: getRandomArrayElement(PHOTO_DESCRIPTIONS),
+    description: getRandomArrayElement(PHOTO_DESCRIPTIONS),
     likes: getRandomInteger(15, 200),
     comments: Array.from({ length: getRandomInteger(0, 10) }, createComment),
   };
 };
 
 export { PHOTO_COUNT, createUsersPhoto };
-
-// author: img/avatars/user${[index].toString(index).padStart(2, '0')}.png
