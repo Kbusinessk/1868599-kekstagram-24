@@ -1,4 +1,9 @@
-import { isEscapeKey, openModal, closeModal } from '../util.js';
+import { isEscapeKey, openModal, closeModal } from '../supporter/util.js';
+
+const CommentImage = {
+  WIDTH: 35,
+  HEIGHT: 35,
+};
 
 const body = document.querySelector('body');
 const bigPicture = body.querySelector('.big-picture');
@@ -8,13 +13,7 @@ const bigPictureLikesCount = bigPicture.querySelector('.likes-count');
 const bigPictureDescription = bigPicture.querySelector('.social__caption');
 const commentsList = bigPicture.querySelector('.social__comments');
 const commentsCount = bigPicture.querySelector('.social__comment-count');
-const closeModalButton = bigPicture.querySelector('#picture-cancel');
-const COMMENT_IMG = {
-  WIDTH: 35,
-  HEIGHT: 35,
-};
-
-const fragmetForComments = document.createDocumentFragment();
+const modalButton = bigPicture.querySelector('#picture-cancel');
 
 const createComment = ({ avatar, message, name }) => {
   const commentOne = document.createElement('li');
@@ -24,8 +23,8 @@ const createComment = ({ avatar, message, name }) => {
   commentOneImg.classList.add('social__picture');
   commentOneImg.src = avatar;
   commentOneImg.alt = name;
-  commentOneImg.width = COMMENT_IMG.WIDTH;
-  commentOneImg.height = COMMENT_IMG.HEIGHT;
+  commentOneImg.width = CommentImage.WIDTH;
+  commentOneImg.height = CommentImage.HEIGHT;
   commentOne.appendChild(commentOneImg);
 
   const commentOneText = document.createElement('p');
@@ -44,21 +43,21 @@ const onPopupEscKeydown = (evt) => {
   }
 };
 
-const onBigPictureHide = () => {
+const onBigPictureClick = () => {
   closeModal(bigPicture);
-  closeModalButton.removeEventListener('click', onBigPictureHide);
+  modalButton.removeEventListener('click', onBigPictureClick);
   document.removeEventListener('keydown', onPopupEscKeydown);
 };
 
 const showBigPicture = () => {
   openModal(bigPicture);
   document.addEventListener('keydown', onPopupEscKeydown);
-  closeModalButton.addEventListener('click', onBigPictureHide);
+  modalButton.addEventListener('click', onBigPictureClick);
 };
 
 const popupBigPicture = ({ url, description, likes, comments }) => {
   commentsList.innerHTML = '';
-  buttonHide.addEventListener('click', onBigPictureHide);
+  buttonHide.addEventListener('click', onBigPictureClick);
 
   bigPictureImage.src = url;
   bigPictureLikesCount.textContent = likes;
@@ -66,8 +65,7 @@ const popupBigPicture = ({ url, description, likes, comments }) => {
 
   commentsCount.classList.add('hidden');
 
-  comments.forEach((comment) => fragmetForComments.appendChild(createComment(comment)));
-  commentsList.append(fragmetForComments);
+  comments.forEach((comment) => commentsList.append(createComment(comment)));
 
   showBigPicture();
 };

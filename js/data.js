@@ -3,7 +3,7 @@ import {
   getRandomArrayElement,
   // eslint-disable-next-line comma-dangle
   getRandomId,
-} from './random.js';
+} from './supporter/random.js';
 
 const PHOTO_COUNT = 25;
 

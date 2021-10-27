@@ -55,7 +55,9 @@ main {
   height: 100vh;
   overflow: hidden;
 }
-
+.text-counter{
+  display: inline-block;
+}
 
 /**
  * Кнопка закрытия модального окна
